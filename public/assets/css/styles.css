@@ -1,0 +1,22 @@
+@import url(./registerstyles.css);
+@import url(./deskstyle.css);
+@import url(./home.css);
+* {
+    margin: 0;
+}
+.imghome{
+   width: auto;
+    max-height: 100%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+.div-form{
+    width: auto;
+    max-height: 100%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}

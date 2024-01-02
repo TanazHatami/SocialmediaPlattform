@@ -1,0 +1,24 @@
+@import url(./bootstrap.min.css);
+* {
+    margin: 0;
+    padding: 5px;
+}
+.error-div{
+    border: solid 1px red;
+    border-radius: 3px;
+    background-color: rgb(247, 170, 170);
+    color: red;
+}
+.container-success {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: block;
+    padding: 5px;
+    margin: 5px;
+    background: #5b9b68;
+    border: 1px solid #293e2d;
+    border-radius: 15px;
+    color: #0d3615;
+}
