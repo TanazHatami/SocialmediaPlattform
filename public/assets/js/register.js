@@ -3,7 +3,7 @@ import { create, $, $$ } from './dom.js';
 import settings, { elementsRegister } from './settings.js';
 import ajax, { checkUserName, saveNewUser } from './ajax.js';
 import render from './render.js';
-import component, { textbox, btn, error } from './component.js';
+import component, { formRegister, error } from './component.js';
 
 // FUNKTIONEN
 const domMapping = () => {
@@ -11,17 +11,7 @@ const domMapping = () => {
     // elementsRegister.form = $('form');
 }
 const loadform = () => {
-    elementsRegister.form = create({
-        type: 'form',
-        parent: elementsRegister.main,
-        classes: [''],
-        listeners:{'submit':formHandler}
-    });
-    textbox(elementsRegister.form, 'E-mail', 'email');
-    textbox(elementsRegister.form, 'Full Name', 'fullname');
-    textbox(elementsRegister.form, 'Usename', 'username');
-    textbox(elementsRegister.form, 'Password', 'password');
-    btn(elementsRegister.form, 'Register');
+    formRegister(elementsRegister.main,formHandler)
 }
 const formHandler = evt => {
     evt.preventDefault();
@@ -40,7 +30,7 @@ const formHandler = evt => {
                     error(elementsRegister.form, 'Sorry, there was an error while registering your new account.<br>Please Try again.')
                 })
             } else {
-                error(elementsRegister.form, `The username is already exists.Please Try again.`)
+                error(elementsRegister.form, `The username is already exists. Please Try again.`)
             }
         }).catch(err => {
             error(elementsRegister.form, 'Sorry, there was an error while checking the username availability.')

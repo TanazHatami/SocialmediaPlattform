@@ -8,28 +8,7 @@ const domMapping = () => {
     elementsIndex.main = $('main');
 }
 const loadPage=()=>{
-    const box=homePage();
-    elementsIndex.form=create({
-        type:'form',
-        parent:box,
-        classes:['px-3 text-center'],
-        listeners:{'submit':formHandler}
-    });
-    textbox(elementsIndex.form, 'Username', 'username');
-    textbox(elementsIndex.form, 'Password', 'password');
-    const p=create({
-        type:'p',
-        parent:elementsIndex.form,
-        content:'Do not have an account?',
-        classes:['form-label']
-    });
-    create({
-        type:'a',
-        parent:p,
-        content:'Sing up',
-        attr:{href:'/register.html'}
-    })
-    btn(elementsIndex.form, 'Log in');
+    homePage(formHandler);
 }
 const formHandler=evt=>{
     evt.preventDefault();

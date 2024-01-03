@@ -1,24 +1,57 @@
 @import url(./bootstrap.min.css);
+
 * {
     margin: 0;
-    padding: 5px;
+    /* padding: 0; */
 }
-.error-div{
+
+.error-div {
     border: solid 1px red;
     border-radius: 3px;
     background-color: rgb(247, 170, 170);
     color: red;
+    padding: 5px;
 }
+
 .container-success {
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
     display: block;
-    padding: 5px;
-    margin: 5px;
-    background: #5b9b68;
-    border: 1px solid #293e2d;
+    padding: 40px 0;
+    border: 1px solid #aaa;
     border-radius: 15px;
     color: #0d3615;
+    width: 30%;
+    box-shadow: 0px 5px 25px 0px rgb(83, 78, 78);
+    text-align: center;
+}
+
+form {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: block;
+    width: 50%;
+    border: 1px solid #aaa;
+    border-radius: 15px;
+    box-shadow: 0px 5px 25px 0px rgb(83, 78, 78);
+}
+
+.titel {
+    font-weight: 600;
+}
+
+.container-success h5 {
+   font-weight:bold ;
+
+}
+
+.container-success .titel {
+    padding: 20px 5px;
+    background-color: #1b5c28;
+    color: white;
+    margin-bottom: 20px;
 }

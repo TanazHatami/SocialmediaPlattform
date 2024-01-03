@@ -3,7 +3,7 @@ import { create, $, $$ } from './dom.js';
 import { elementsDesk, elementsIndex,elementsRegister } from './settings.js';
 
 const component = {
-    homePage() {
+    homePage(formHandler) {
         const row = create({
             parent: elementsIndex.main,
             classes: ['row vh-100 m-0']
@@ -18,21 +18,49 @@ const component = {
             parent:col1,
             classes:['imghome']
         });
-        image.src='./assets/img/homepage.png'
+        image.src='./assets/img/logo.png'
         const col2 = create({
             parent: row,
             classes: ['col-md-6 col-12 vh-100 position-relative']
         });
-        const box=create({
-           parent:col2,
-           classes:['border border-dark-subtle div-form rounded'],
+      
+        elementsIndex.form=create({
+            type:'form',
+            parent:col2,
+            classes:['px-3 py-5 text-center'],
+            listeners:{'submit':formHandler}
         });
-       return box;
+        const divTitel = create({
+            parent: elementsIndex.form,
+            classes:['mb-4']
+        });
+        create({
+            type:'h1',
+            parent:divTitel,
+            content:'Eligram',
+            classes:['titel']
+        })
+        textbox(elementsIndex.form, 'Username', 'username');
+        textbox(elementsIndex.form, 'Password', 'password');
+        btn(elementsIndex.form, 'Log in','w-100');
+        const p=create({
+            type:'p',
+            parent:elementsIndex.form,
+            content:'Do not have an account? ',
+            classes:['form-label']
+        });
+        create({
+            type:'a',
+            parent:p,
+            content:'Sing up',
+            attr:{href:'/register.html'}
+        })
+       
     },
     textBox(parent, placeholder,name) {
         const div = create({
             parent:parent,
-            classes:['form-outline mt-5']
+            classes:['form-outline mb-4']
         });
         const input = create({
             type:'input',
@@ -41,14 +69,33 @@ const component = {
             attr:{name:name,placeholder:placeholder}
         });
     },
-    btn(parent,content){
+    btn(parent,content,cl){
         const button = create({
             content:content,
             parent:parent,
             type:'button',
-            classes:['btn btn-primary my-5']
+            classes:[`btn btn-primary mb-4 ${cl}`]
         });
         return btn;
+    },
+    formRegister(parent,formHandler){
+        elementsRegister.form = create({
+            type: 'form',
+            parent:  parent,
+            classes: ['p-3'],
+            listeners: { 'submit': formHandler }
+        });
+        create({
+            type: 'label',
+            content: 'Sign up to see your friends photos.',
+            classes: ['form-label titel mb-4'],
+            parent: elementsRegister.form
+        })
+        textbox(elementsRegister.form, 'E-mail', 'email');
+        textbox(elementsRegister.form, 'Full Name', 'fullname');
+        textbox(elementsRegister.form, 'Usename', 'username');
+        textbox(elementsRegister.form, 'Password', 'password');
+        btn(elementsRegister.form, 'Register', 'w-100');
     },
     error(parent,content){
         const div=create({
@@ -158,7 +205,7 @@ const component = {
             classes:['col-12']
         });
         const button = create({
-            content:'Start a post...',
+            content:'Start a post ...',
             parent:colNewPost,
             type:'button',
             classes:['btn btn-primary w-100'],
@@ -259,3 +306,4 @@ export const label = component.label;
 export const deskHeader = component.deskHeader;
 export const deskPanel = component.deskPanel;
 export const newPost = component.newPost;
+export const formRegister = component.formRegister;
