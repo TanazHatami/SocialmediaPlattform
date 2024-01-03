@@ -121,17 +121,8 @@ const component = {
         });
         const colRight=create({
             parent:div,
-            classes:['col-4']
+            classes:['col-4 d-flex justify-content-end']
         });
-        const homeLink=create({
-            type:'a',
-            parent:colRight,
-            content:'home',
-            attr:{href:'../home.html'},
-            listeners:{'click':home},
-            classes:['pe-3']
-        });
-       
         create({
             type:'a',
             parent:colRight,

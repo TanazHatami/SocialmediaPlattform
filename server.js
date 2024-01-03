@@ -18,16 +18,32 @@ const httpServer = http.Server(expressServer);
 const io = new Server(httpServer);
 
 io.on('connect', socket => {
-    socket.on('msgFromClient', data => {
-        data.socketId=socket.id;
-        io.emit('msgFromServer', data);
-        console.log(data);
+  
+    socket.on('msgNewPost', data => {
+        data.socketId = socket.id;
+        const userId = data.userId;
+
+        let dbPosts = db.use(dbNames.posts);
+        // const userId=request.body.id;
+        return dbPosts.list({
+            include_docs: true
+        }).then(
+            res => res.rows.map(row => row.doc)
+        ).then(
+            res => {
+                io.emit('msgUpdate', res);
+            }
+        ).catch(
+            err => {
+                io.emit('msgUpdate', err);
+            }
+        )
     })
-})
+  })
 expressServer.use(express.json());
 const dbNames = {
     users: 'users',
-    posts:'posts'
+    posts: 'posts'
 }
 let db;
 
@@ -167,7 +183,7 @@ expressServer.post('/login', (request, response) => {
         }
     })
 })
-expressServer.put('/saveNewPost', (request, response)=>{
+expressServer.put('/saveNewPost', (request, response) => {
     const myForm = formidable({
         uploadDir: 'public/assets/img/uploads/',
         keepExtensions: true,
@@ -176,59 +192,60 @@ expressServer.put('/saveNewPost', (request, response)=>{
     });
 
     myForm.parse(request, (err, fields, files) => {
-    if (err) {    // Fehlerbehandlung
-        console.log(err);
-        response.json({
-            status: 'err',
-            err
-        })
-    } else {   
-        const content = (new classes.Content(
-            fields.text[0],
-            files.illu,
-            fields.userId
-        ))
-        // Leere Dateien löschen
-            if(files.illu[0].size==0){
+        if (err) {    // Fehlerbehandlung
+            console.log(err);
+            response.json({
+                status: 'err',
+                err
+            })
+        } else {
+            const content = (new classes.Content(
+                fields.text[0],
+                files.illu,
+                fields.userId,
+                fields.username
+            ))
+            // Leere Dateien löschen
+            if (files.illu[0].size == 0) {
                 fs.unlink(files.illu[0].filepath, (err) => {
                     if (err) {
-                      console.log('Fehler beim Löschen des Files:', err);
+                        console.log('Fehler beim Löschen des Files:', err);
                     }
-                  });
+                });
             }
-        // Contents in Datenbank speichern
-        let dbPosts = db.use(dbNames.posts);
+            // Contents in Datenbank speichern
+            let dbPosts = db.use(dbNames.posts);
 
-        dbPosts.insert(content).then(
-            () => dbPosts.list({
-                include_docs: true
-            })
-        ).then(
-            res => response.json({
-                status: 'success',
-                data: content
-            })
-        ).catch(
-            err => {
-                // Falls der Datensatz nicht geschrieben weden konnte
-                response.json({
-                    status: 'err',
-                    err
+            dbPosts.insert(content).then(
+                () => dbPosts.list({
+                    include_docs: true
                 })
-                console.warn(err);
-            }
-        )
+            ).then(
+                res => response.json({
+                    status: 'success',
+                    data: content
+                })
+            ).catch(
+                err => {
+                    // Falls der Datensatz nicht geschrieben weden konnte
+                    response.json({
+                        status: 'err',
+                        err
+                    })
+                    console.warn(err);
+                }
+            )
 
-    }
+        }
+    })
 })
-})
-expressServer.post('/getAllPosts', (request, response)=>{
-    let dbPosts = db.use(dbNames.posts);
-    const userId=request.body.id;
-    return dbPosts.find({
+expressServer.post('/getUserInfo', (request, response) => {
+    const userId = request.body.id;
+    let dbUsers = db.use(dbNames.users);
+    return dbUsers.find({
         selector: {
-            userId: {
-                '$eq': userId
+            id: {
+                '$eq': +userId
             }
         }
     }).then(
@@ -248,7 +265,6 @@ expressServer.post('/getAllPosts', (request, response)=>{
         }
     )
 })
-
 
 const loadCredentials = () => {
     return new Promise((resolve, reject) => {
@@ -289,7 +305,7 @@ const init = () => {
     ).then(
         () => {
             httpServer.listen(80, err => console.log(err || 'Server läuft'));
-        
+
         }
 
     )

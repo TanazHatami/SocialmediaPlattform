@@ -2,11 +2,10 @@
 import settings, { user, elementsDesk } from "./settings.js";
 import { create, $, $$ } from './dom.js';
 import component, { deskHeader, deskPanel, newPost } from './component.js';
-import ajax, { saveNewPost, getAllPosts } from './ajax.js';
+import ajax, { saveNewPost } from './ajax.js';
+import render from "./render.js";
 // FUNKTIONEN
 let socket=io.connect();
-
-
 const domMapping = () => {
     elementsDesk.main = $('main');
 }
@@ -27,44 +26,44 @@ const formHandler = evt => {
     elementsDesk.form = $('form');
     const content = new FormData(elementsDesk.form);
     content.append('userId', user.id);
-    saveNewPost(content)
-        .then(() => getAllPosts(user.id))
+    content.append('username', user.username);
+    saveNewPost(content).then(
+            () => newPostMsg()
+        )
         .catch(console.warn);
     closeForm();
-    sendMsg();
-    // showData();
 }
-const sendMsg = () => {
+const newPostMsg = () => {
     // Nachricht über Websocket versenden
-    socket.emit('msgFromClient', {
+    socket.emit('msgNewPost', {
         userId:user.id
     });
 }
 
 const closeForm = () => {
     $('.card-container').remove();
+   
 }
-const renderMsg=msg=>{
-    console.log(msg.socketId);
+const updatePage=msg=>{
+    render.showAllPosts(msg)
 }
 const appendEventlisteners = () => {
    
 }
 const appendSocketEventlisteners = () => {
-    socket.on('msgFromServer', renderMsg);
+    socket.on('msgUpdate', updatePage);
 }
 const init = () => {
+    
     user.id = localStorage.getItem('id');
     user.username = JSON.parse(localStorage.getItem('username'));
     user.fullname = JSON.parse(localStorage.getItem('fullname'));
-    console.log(user.id);
     domMapping();
     appendEventlisteners();
     loadHeader();
     loadPanel();
-    getAllPosts(user.id);
+    newPostMsg();
     appendSocketEventlisteners();
-    sendMsg();
 }
 
 // INIT

@@ -2,10 +2,7 @@
 import { create, $, $$ } from './dom.js';
 import settings,{elementsIndex} from './settings.js';
 import ajax,{login} from './ajax.js';
-// import render,{homePage} from './render.js';
-import component,{homePage,textbox,btn, label} from './component.js';
-
-
+import component,{homePage,textbox,btn} from './component.js';
 // FUNKTIONEN
 const domMapping = () => {
     elementsIndex.main = $('main');
@@ -50,10 +47,7 @@ window.addEventListener('load',loadPage);
 const init = () => {
     domMapping();
     appendEventlisteners();
-    // socket=io.connect();
-   
-
+    
 }
-
 // INIT
 init();

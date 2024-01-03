@@ -28,7 +28,21 @@ const render = {
         contents.map(post => {
             const div = create({
                 parent: elementsDesk.panelPost,
-                classes: ['container']
+                classes: ['container-post']
+            });
+            const rowUser=create({
+                parent: div,
+                classes: ['row']
+            });
+            const colUser = create({
+                parent: rowUser,
+                classes: ['col-12']
+            });
+            create({
+                type: 'h2',
+                parent: colUser,
+                content: post.username,
+                classes:['username']
             });
             //nur wenn ein img speichert wurde
             if (post.hasOwnProperty('illu')) {
@@ -58,7 +72,8 @@ const render = {
             create({
                 type: 'p',
                 parent: colText,
-                content: post.text
+                content: post.text,
+                classes:['text']
             });
 
             const rowDate = create({
@@ -73,7 +88,7 @@ const render = {
                 type: 'p',
                 parent: colDate,
                 content: new Date(post.crDate).toLocaleDateString(),
-                classes:['date']
+                classes: ['date']
             });
 
 

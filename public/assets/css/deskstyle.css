@@ -1,14 +1,16 @@
 @import url(./bootstrap.min.css);
-*{
+
+* {
     margin: 0;
 }
+
 .header-container {
     position: flex;
-    height:max-content;
-    padding: 10px;
+    height: max-content;
+    padding: 10px 20px;
     background: #eee;
     border: 1px solid #aaa;
-  
+
 }
 
 .panel-container {
@@ -20,17 +22,19 @@
     border: 1px solid #b61b1b;
     /* border-radius: 5px; */
 }
+
 .card-container {
     position: absolute;
     top: 0;
     left: 0;
-   width: 100%;
-   height: 100%;
+    width: 100%;
+    height: 100%;
     background: #0d0c0c73;
     z-index: 5000;
-   
+
 }
-.createpost_container{
+
+.createpost_container {
     position: absolute;
     left: 50%;
     top: 50%;
@@ -41,26 +45,44 @@
     border: 1px solid #aaa;
     border-radius: 5px;
 }
-.btn-close:hover{
+
+.btn-close:hover {
     /* cursor: default; */
     background-color: #f21818;
-    color:white;
+    color: white;
 
 }
-.container {
+
+.container-post {
     position: relative;
     display: block;
-    padding: 5px;
-    margin: 5px;
+    padding: 10px;
+    margin: 20px auto;
     background: #eee;
     border: 1px solid #aaa;
+    border-radius: 20px;
+    box-shadow: 0px 5px 25px 0px rgb(83, 78, 78);
+}
+
+.container-post .username {
+    padding: 5px 10px;
+    border :1px solid #aaa;
     border-radius: 5px;
+    background-color: white;
+    color: rgb(10, 10, 179);
+    font-weight: 800;
 }
-.illu{
-    width:100%;
+
+.illu {
+    width: 100%;
     height: 300px;
+    text-align: center;
+  
 }
-.date{
+.container-post .text{
+    margin: 10px auto;
+}
+.date {
     color: #aaa;
     text-align: end;
 }
