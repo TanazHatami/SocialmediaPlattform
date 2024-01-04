@@ -45,7 +45,7 @@ const ajax = {
                     localStorage.setItem('id', JSON.stringify(id));
                     localStorage.setItem('username', JSON.stringify(username));
                     localStorage.setItem('fullname', JSON.stringify(fullname));
-
+                    localStorage.setItem('color', JSON.stringify('#0a0ab3'));
                     window.location.href = `desk.html`
                 }
                 else if (res.status == 'error') throw (new Error(res.message));

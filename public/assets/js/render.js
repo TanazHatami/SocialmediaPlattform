@@ -125,6 +125,14 @@ const render = {
                 content: post.username,
                 classes: ['username', post.userId == user.id ? 'myPost' : 'notMyPost']
             });
+            elementsDesk.myPosts = $$('.container-post .myPost');
+            elementsDesk.myPosts.map(post => {
+                post.style.setProperty('--myColor', elementsDesk.color.value);
+            });
+            elementsDesk.othersPosts = $$('.container-post .username');
+            elementsDesk.othersPosts.map(post => {
+                post.style.setProperty('--myColor', elementsDesk.color.value);
+            });
             //nur wenn ein img speichert wurde
             if (post.hasOwnProperty('illu')) {
                 const rowImg = create({

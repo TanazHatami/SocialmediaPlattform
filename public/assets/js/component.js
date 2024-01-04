@@ -1,6 +1,6 @@
 'use strict';
 import { create, $, $$ } from './dom.js';
-import { elementsDesk, elementsIndex,elementsRegister } from './settings.js';
+import settings, { elementsDesk, elementsIndex,elementsRegister,myColor } from './settings.js';
 
 const component = {
     homePage(formHandler) {
@@ -164,7 +164,7 @@ const component = {
            });
           
     },
-    deskHeader(parent,username,fullname,logout,home){
+    deskHeader(parent,username,fullname,logout,changeColor){
         const div=create({
             type:'header',
             parent:parent,
@@ -192,15 +192,36 @@ const component = {
             parent:div,
             classes:['col-4 d-flex justify-content-end']
         });
+        const rowRight=create({
+            parent:colRight,
+            classes:['row']
+        });
+        const divLogout=create({
+            parent:rowRight,
+            classes:['col-12']
+        });
         create({
             type:'a',
-            parent:colRight,
+            parent:divLogout,
             content:'Logout',
             attr:{href:'../index.html'},
             listeners:{'click':logout},
             classes:['logout']
 
         })
+        const divColor=create({
+            parent:rowRight,
+            classes:['col-12']
+        });
+        elementsDesk.color=create({
+            type:'input',
+            name:'color',
+            parent:divColor,
+            attr:{type:'color',value: myColor.value},
+            listeners:{'change':changeColor},
+        })
+        // localStorage.setItem('color', JSON.stringify(myColor.value));
+
     },
     deskPanel(parent,createPost){
         // const div=create({

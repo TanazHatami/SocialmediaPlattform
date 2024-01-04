@@ -22,6 +22,7 @@ const formHandler = evt => {
     }
     //Wenn alle Felder ausgefüllt sind
     if (!validity) {
+        elementsIndex.form.divErr.innerHTML = '';
         login(user)
     } else {
         elementsIndex.form.divErr.innerHTML = '';
