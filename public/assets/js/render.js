@@ -77,7 +77,7 @@ const render = {
         create({
             type: 'h5',
             parent: colUsernamet,
-            content: 'Fullname',
+            content: 'Username',
             classes: ['form-label']
         });
         const colUsernamev = create({

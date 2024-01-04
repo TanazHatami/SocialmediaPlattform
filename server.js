@@ -1,5 +1,4 @@
 'use strict';
-
 import express from 'express';
 import http from 'http';
 import { Server } from "socket.io";
@@ -22,7 +21,6 @@ const httpServer = http.Server(expressServer);
 // Websocket
 const io = new Server(httpServer);
 io.on('connect', socket => {
-
     socket.on('msgNewPost', data => {
         data.socketId = socket.id;
         const userId = data.userId;
@@ -246,32 +244,6 @@ expressServer.put('/saveNewPost', (request, response) => {
 
         }
     })
-})
-expressServer.post('/getUserInfo', (request, response) => {
-    const userId = request.body.id;
-    let dbUsers = db.use(dbNames.users);
-    return dbUsers.find({
-        selector: {
-            id: {
-                '$eq': +userId
-            }
-        }
-    }).then(
-        res => res.docs
-    ).then(
-        res => response.json({
-            status: 'success',
-            data: res
-        })
-    ).catch(
-        err => {
-            response.json({
-                status: 'err',
-                err
-            })
-            console.warn(err);
-        }
-    )
 })
 expressServer.get('/getAllUsers', (request, response) => {
     // Alles gut

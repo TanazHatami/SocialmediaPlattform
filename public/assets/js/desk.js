@@ -66,15 +66,6 @@ const erstColor=()=>{
     elementsDesk.color.value = JSON.parse(localStorage.getItem('color'));
     elementsDesk.header = $('header');
     elementsDesk.header.style.setProperty('--myColor',elementsDesk.color.value);
-    // elementsDesk.myPosts = $$('.container-post .myPost');
-    // elementsDesk.myPosts.map(post => {
-    //     post.style.setProperty('--myColor',elementsDesk.color.value);
-    // })
-    // elementsDesk.othersPosts = $$('.container-post .username');
-    // elementsDesk.othersPosts.map(post => {
-    //     post.style.setProperty('--myColor',elementsDesk.color.value);
-    // })
-   
 }
 const changeColor = () => {
     myColor.value= elementsDesk.color.value;

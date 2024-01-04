@@ -7,7 +7,6 @@ const settings = {
     user:{},
     myColor:{}
 }
-
 export default settings;
 export const elementsIndex = settings.elementsIndex;
 export const elementsRegister = settings.elementsRegister;
