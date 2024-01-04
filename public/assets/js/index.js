@@ -2,7 +2,8 @@
 import { create, $, $$ } from './dom.js';
 import settings,{elementsIndex} from './settings.js';
 import ajax,{login} from './ajax.js';
-import component,{homePage,textbox,btn} from './component.js';
+import component,{homePage} from './component.js';
+
 // FUNKTIONEN
 const domMapping = () => {
     elementsIndex.main = $('main');
@@ -15,7 +16,7 @@ const formHandler=evt=>{
     const user = new FormData(elementsIndex.form);
     login(user).then(
     ).catch(
-        err=>console.warn
+        // err=>console.warn
     )
 }
 const appendEventlisteners = () => {
@@ -28,5 +29,6 @@ const init = () => {
     appendEventlisteners();
     
 }
+
 // INIT
 init();

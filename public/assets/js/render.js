@@ -1,10 +1,11 @@
 'use strict';
-import settings, { elementsRegister, elementsDesk } from './settings.js';
-import component, { label, success } from './component.js';
+import settings, { elementsIndex, elementsRegister, elementsDesk,user } from './settings.js';
+import component, { error } from './component.js';
 import { create, $, $$ } from './dom.js';
-
 const render = {
-    homePage() {
+    showError(err) {
+        elementsIndex.form.divErr.innerHTML = '';
+        error(elementsIndex.form.divErr, err)
     },
     showNewUser(newUser) {
         elementsRegister.main.innerHTML = '';
@@ -12,88 +13,88 @@ const render = {
             parent: elementsRegister.main,
             classes: ['container-success']
         });
-        const row=create({
-            parent:div,
-            classes:['row']
+        const row = create({
+            parent: div,
+            classes: ['row']
         });
-        const colTitel=create({
-            parent:row,
-            classes:['col-12']
+        const colTitel = create({
+            parent: row,
+            classes: ['col-12']
         });
         create({
-            type:'p',
-            parent:colTitel,
-            content:'The user was successfully saved',
-            classes:['form-label titel']
+            type: 'p',
+            parent: colTitel,
+            content: 'The user was successfully saved',
+            classes: ['form-label titel']
         });
         //Email
-        const colEmailt=create({
-            parent:row,
-            classes:['col-12 mb-3']
+        const colEmailt = create({
+            parent: row,
+            classes: ['col-12 mb-3']
         });
         create({
-            type:'h5',
-            parent:colEmailt,
-            content:'E-Mail',
-            classes:['form-label']
+            type: 'h5',
+            parent: colEmailt,
+            content: 'E-Mail',
+            classes: ['form-label']
         });
-        const colEmailv=create({
-            parent:row,
-            classes:['col-12  mb-4']
+        const colEmailv = create({
+            parent: row,
+            classes: ['col-12  mb-4']
         });
         create({
-            type:'p',
-            parent:colEmailv,
-            content:newUser.email,
-            classes:['form-label']
+            type: 'p',
+            parent: colEmailv,
+            content: newUser.email,
+            classes: ['form-label']
         });
-     //Fullname
-     const colFullnamet=create({
-        parent:row,
-        classes:['col-12 mb-3']
-    });
-    create({
-        type:'h5',
-        parent:colFullnamet,
-        content:'Fullname',
-        classes:['form-label']
-    });
-    const colFullnamev=create({
-        parent:row,
-        classes:['col-12  mb-4']
-    });
-    create({
-        type:'p',
-        parent:colFullnamev,
-        content: newUser.fullname,
-        classes:['form-label']
-    });
-    //Username
-    const colUsernamet=create({
-        parent:row,
-        classes:['col-12  mb-3']
-    });
-    create({
-        type:'h5',
-        parent:colUsernamet,
-        content:'Fullname',
-        classes:['form-label']
-    });
-    const colUsernamev=create({
-        parent:row,
-        classes:['col-12  mb-4']
-    });
-    create({
-        type:'p',
-        parent:colUsernamev,
-        content: newUser.username,
-        classes:['form-label']
-    });
-    //link
-    const colLink=create({
-        parent:row,
-        classes:['col-12']
-    });
+        //Fullname
+        const colFullnamet = create({
+            parent: row,
+            classes: ['col-12 mb-3']
+        });
+        create({
+            type: 'h5',
+            parent: colFullnamet,
+            content: 'Fullname',
+            classes: ['form-label']
+        });
+        const colFullnamev = create({
+            parent: row,
+            classes: ['col-12  mb-4']
+        });
+        create({
+            type: 'p',
+            parent: colFullnamev,
+            content: newUser.fullname,
+            classes: ['form-label']
+        });
+        //Username
+        const colUsernamet = create({
+            parent: row,
+            classes: ['col-12  mb-3']
+        });
+        create({
+            type: 'h5',
+            parent: colUsernamet,
+            content: 'Fullname',
+            classes: ['form-label']
+        });
+        const colUsernamev = create({
+            parent: row,
+            classes: ['col-12  mb-4']
+        });
+        create({
+            type: 'p',
+            parent: colUsernamev,
+            content: newUser.username,
+            classes: ['form-label']
+        });
+        //link
+        const colLink = create({
+            parent: row,
+            classes: ['col-12']
+        });
         // label(div, 'E-Mail', newUser.email);
         // label(div, 'Full Name', newUser.fullname);
         // label(div, 'Username', newUser.username);
@@ -105,6 +106,8 @@ const render = {
         })
     },
     showAllPosts(contents) {
+        console.log(user.id,'me');
+       
         elementsDesk.panelPost.innerHTML = '';
         contents.reverse();
         contents.map(post => {
@@ -124,7 +127,7 @@ const render = {
                 type: 'h2',
                 parent: colUser,
                 content: post.username,
-                classes: ['username']
+                classes: ['username', post.userId==user.id ? 'myPost' : 'notMyPost']
             });
             //nur wenn ein img speichert wurde
             if (post.hasOwnProperty('illu')) {
@@ -169,11 +172,34 @@ const render = {
             create({
                 type: 'p',
                 parent: colDate,
-                content: new Date(post.crDate).toLocaleDateString(),
+                content: new Date(post.crDate).toLocaleString(),
                 classes: ['date']
             });
 
 
+        })
+    },
+    showAllUsers(users){
+        elementsDesk.members.innerHTML='';
+        create({
+            type:'h3',
+            parent:elementsDesk.members,
+            content:`${users.length} Members`
+        });
+        users.map(user=>{
+            const row=create({
+                parent:elementsDesk.members,
+                classes:['row m-0 px-3']
+            });
+            const col=create({
+                parent:row,
+                classes:['col']
+            });
+            create({
+                type:'p',
+                parent:col,
+                content:user
+            });
         })
     }
 }

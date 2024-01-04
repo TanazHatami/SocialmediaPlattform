@@ -5,12 +5,13 @@
 }
 
 .header-container {
-    position: flex;
-    height: max-content;
-    padding: 10px 20px;
-    background: #eee;
+    width: 100%;
+    position: fixed;
+    z-index: 3000;
+    padding: 10px;
+    margin: 0;
+    background: #293057;
     border: 1px solid #aaa;
-    margin-bottom: 20px;
     box-shadow: 0px 5px 25px 0px rgb(83, 78, 78);
 }
 
@@ -18,7 +19,8 @@
     position: relative;
     display: block;
     padding: 5px;
-  }
+    margin-top: 150px;
+}
 
 .card-container {
     position: absolute;
@@ -71,11 +73,15 @@
     font-size: 16px;
 }
 
+.container-post .myPost {
+    background-color: #910562;
+    color: aqua;
+}
+
 .illu {
     width: 100%;
     height: 300px;
     text-align: center;
-
 }
 
 .container-post .text {
@@ -84,5 +90,24 @@
 
 .date {
     color: #aaa;
-    text-align: end;
+}
+
+.panel-users-container {
+    position: relative;
+    display: block;
+    box-shadow: 0px 5px 25px 0px rgb(83, 78, 78);
+    /* padding: 5px; */
+    /* margin: 5px; */
+    background: #eee;
+    border: 1px solid #aaa;
+    border-radius: 20px;
+    color: rgb(10, 10, 179);
+}
+
+.panel-users-container h3 {
+    margin-top: 20px;
+    padding: 5px;
+    color: white;
+    background-color: rgb(10, 10, 179);
+    text-align: center;
 }

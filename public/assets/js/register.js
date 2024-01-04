@@ -4,7 +4,8 @@ import settings, { elementsRegister } from './settings.js';
 import ajax, { checkUserName, saveNewUser } from './ajax.js';
 import render from './render.js';
 import component, { formRegister, error } from './component.js';
-
+// import socket from './desk.js';
+let socket=io.connect();
 // FUNKTIONEN
 const domMapping = () => {
     elementsRegister.main = $('main');
@@ -26,6 +27,8 @@ const formHandler = evt => {
             if (!res) {
                 saveNewUser(user).then(
                     render.showNewUser
+                ).then(
+                    newUserMsg()
                 ).catch(err => {
                     error(elementsRegister.form, 'Sorry, there was an error while registering your new account.<br>Please Try again.')
                 })
@@ -37,14 +40,22 @@ const formHandler = evt => {
         })
 
 }
+const newUserMsg = () => {
+    socket.emit('newUserMsg');
+}
 
 const appendEventlisteners = () => {
+   
 }
+const appendSocketEventlisteners = () => {
+   
+}
+
 const init = () => {
     domMapping();
     appendEventlisteners();
     loadform();
-
+    appendSocketEventlisteners();
 }
 
 // INIT

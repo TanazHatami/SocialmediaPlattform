@@ -1,8 +1,8 @@
 'use strict';
-import settings, { user, elementsDesk } from "./settings.js";
+import settings, { user, elementsDesk} from "./settings.js";
 import { create, $, $$ } from './dom.js';
 import component, { deskHeader, deskPanel, newPost } from './component.js';
-import ajax, { saveNewPost } from './ajax.js';
+import ajax, { saveNewPost,getAllUsers} from './ajax.js';
 import render from "./render.js";
 // FUNKTIONEN
 let socket=io.connect();
@@ -34,7 +34,6 @@ const formHandler = evt => {
     closeForm();
 }
 const newPostMsg = () => {
-    // Nachricht über Websocket versenden
     socket.emit('msgNewPost', {
         userId:user.id
     });
@@ -45,13 +44,21 @@ const closeForm = () => {
    
 }
 const updatePage=msg=>{
+ 
     render.showAllPosts(msg)
 }
 const appendEventlisteners = () => {
    
 }
+const updateUsers = () => {
+    socket.emit('newUserMsg');
+}
 const appendSocketEventlisteners = () => {
     socket.on('msgUpdate', updatePage);
+    socket.on('msgUpdateUser', msgUpdateUser);
+}
+const msgUpdateUser=users=>{
+   render.showAllUsers(users)
 }
 const init = () => {
     
@@ -63,8 +70,10 @@ const init = () => {
     loadHeader();
     loadPanel();
     newPostMsg();
+    getAllUsers();
     appendSocketEventlisteners();
+    setInterval(updateUsers, 1000);
+   
 }
-
 // INIT
 init();

@@ -12,19 +12,22 @@ const expressServer = express();
 expressServer.use(express.static('public', {
     extensions: ['html']
 }));
+expressServer.use(express.json());
+const dbNames = {
+    users: 'users',
+    posts: 'posts'
+}
+let db;
 // HTTP
 const httpServer = http.Server(expressServer);
 // Websocket
 const io = new Server(httpServer);
-
 io.on('connect', socket => {
-  
+
     socket.on('msgNewPost', data => {
         data.socketId = socket.id;
         const userId = data.userId;
-
         let dbPosts = db.use(dbNames.posts);
-        // const userId=request.body.id;
         return dbPosts.list({
             include_docs: true
         }).then(
@@ -38,16 +41,22 @@ io.on('connect', socket => {
                 io.emit('msgUpdate', err);
             }
         )
+    });
+    socket.on('newUserMsg', data => {
+        let dbUsers = db.use(dbNames.users);
+        dbUsers.list({
+            include_docs: true
+        }).then(
+            res => res.rows.map(row => row.doc.username)
+        ).then(
+            res => {
+                io.emit('msgUpdateUser', res);
+            }
+        ).catch(
+            console.warn
+        )
     })
-  })
-expressServer.use(express.json());
-const dbNames = {
-    users: 'users',
-    posts: 'posts'
-}
-let db;
-
-
+})
 // Routen
 expressServer.post('/checkUserName', (request, response) => {
     const myForm = formidable();
@@ -265,7 +274,28 @@ expressServer.post('/getUserInfo', (request, response) => {
         }
     )
 })
-
+expressServer.get('/getAllUsers', (request, response) => {
+    // Alles gut
+    let dbUsers = db.use(dbNames.users);
+    return dbUsers.list({
+        include_docs: true
+    }).then(
+        res => res.rows.map(row => row.doc.username)
+    ).then(res => {
+        response.json({
+            status: 'success',
+            data: res
+        })
+    }
+    )
+        .catch(err => {
+            response.json({
+                status: 'error',
+                message: err
+            });
+        });
+})
+//
 const loadCredentials = () => {
     return new Promise((resolve, reject) => {
         fs.readFile(

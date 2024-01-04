@@ -41,13 +41,13 @@ const component = {
             classes:['titel']
         })
         textbox(elementsIndex.form, 'Username', 'username');
-        textbox(elementsIndex.form, 'Password', 'password');
+        passbox(elementsIndex.form, 'Password', 'password');
         btn(elementsIndex.form, 'Log in','w-100');
         const p=create({
             type:'p',
             parent:elementsIndex.form,
             content:'Do not have an account? ',
-            classes:['form-label']
+            classes:['form-label mb-4']
         });
         create({
             type:'a',
@@ -55,7 +55,9 @@ const component = {
             content:'Sing up',
             attr:{href:'/register.html'}
         })
-       
+        elementsIndex.form.divErr=create({
+        parent:(elementsIndex.form)
+       })
     },
     textBox(parent, placeholder,name) {
         const div = create({
@@ -67,6 +69,18 @@ const component = {
             parent:div,
             classes:['form-control'],
             attr:{name:name,placeholder:placeholder}
+        });
+    },
+    passbox(parent, placeholder,name) {
+        const div = create({
+            parent:parent,
+            classes:['form-outline mb-4']
+        });
+        const input = create({
+            type:'input',
+            parent:div,
+            classes:['form-control'],
+            attr:{type:'password',name:name,placeholder:placeholder}
         });
     },
     btn(parent,content,cl){
@@ -179,13 +193,13 @@ const component = {
         })
     },
     deskPanel(parent,createPost){
-        const div=create({
-            parent:parent,
-            classes:['']
-        });
+        // const div=create({
+        //     parent:parent,
+        //     classes:['']
+        // });
         const row=create({
-            parent:div,
-            classes:['row justify-content-center']
+            parent:parent,
+            classes:['row justify-content-around m-0']
         });
         const colLeft=create({
             parent:row,
@@ -193,7 +207,7 @@ const component = {
         });
         const colCernter=create({
             parent:row,
-            classes:['col-6 panel-container']
+            classes:['col-5 panel-container']
         });
        
         const rowCenter=create({
@@ -211,15 +225,20 @@ const component = {
             classes:['btn btn-primary w-100'],
             listeners:{'click':createPost}
         });
-        const colPosts=create({
+        elementsDesk.panelPost=create({
             parent:rowCenter,
             classes:['col-12']
         });
-        elementsDesk.panelPost=colPosts;
-       const colRight=create({
+        // elementsDesk.panelPost=colPosts;
+       const panelRight=create({
             parent:row,
             classes:['col-3 panel-container']
         });
+         elementsDesk.members=create({
+            parent:panelRight,
+            classes:['panel-users-container']
+        });
+       
     },
     newPost(parent,formHandler,closeForm){
         const div=create({
@@ -298,6 +317,7 @@ const component = {
 }
 export default component;
 export const textbox = component.textBox;
+export const passbox = component.passbox;
 export const homePage = component.homePage;
 export const btn = component.btn;
 export const error = component.error;
