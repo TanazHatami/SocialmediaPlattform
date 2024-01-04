@@ -95,9 +95,7 @@ const render = {
             parent: row,
             classes: ['col-12']
         });
-        // label(div, 'E-Mail', newUser.email);
-        // label(div, 'Full Name', newUser.fullname);
-        // label(div, 'Username', newUser.username);
+      
         create({
             parent: colLink,
             type: 'a',
@@ -106,8 +104,6 @@ const render = {
         })
     },
     showAllPosts(contents) {
-        console.log(user.id,'me');
-       
         elementsDesk.panelPost.innerHTML = '';
         contents.reverse();
         contents.map(post => {

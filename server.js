@@ -7,7 +7,6 @@ import formidable from 'formidable';
 import nano from 'nano';
 import fs from 'fs';
 import classes from './classes.js';
-// const server = express();
 const expressServer = express();
 expressServer.use(express.static('public', {
     extensions: ['html']
@@ -326,18 +325,16 @@ const init = () => {
         res => {
             // Falls die gewünschte Datenbank nicht existiert, bitte anlegen
             if (!res.includes(dbNames.users)) {
-                return db.create(dbNames.users)
+                 db.create(dbNames.users)
             }
             if (!res.includes(dbNames.posts)) {
-                return db.create(dbNames.posts)
+                 db.create(dbNames.posts)
             }
         }
     ).then(
         () => {
             httpServer.listen(80, err => console.log(err || 'Server läuft'));
-
         }
-
     )
 }
 

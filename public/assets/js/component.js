@@ -105,16 +105,24 @@ const component = {
             classes: ['form-label titel mb-4'],
             parent: elementsRegister.form
         })
-        textbox(elementsRegister.form, 'E-mail', 'email');
-        textbox(elementsRegister.form, 'Full Name', 'fullname');
-        textbox(elementsRegister.form, 'Usename', 'username');
-        textbox(elementsRegister.form, 'Password', 'password');
+        textbox(elementsRegister.form, 'E-mail *', 'email');
+        textbox(elementsRegister.form, 'Full Name *', 'fullname');
+        textbox(elementsRegister.form, 'Usename *', 'username');
+        textbox(elementsRegister.form, 'Password *', 'password');
         btn(elementsRegister.form, 'Register', 'w-100');
+        create({
+            parent: elementsRegister.form,
+            type: 'a',
+            content: 'Back to Login',
+            attr: { href: '../index.html' },
+           
+        })
+
     },
     error(parent,content){
         const div=create({
             parent:parent,
-            classes:['error-div']
+            classes:['error-div mt-3']
         });
         create({
             type:'label',
@@ -189,7 +197,9 @@ const component = {
             parent:colRight,
             content:'Logout',
             attr:{href:'../index.html'},
-            listeners:{'click':logout}
+            listeners:{'click':logout},
+            classes:['logout']
+
         })
     },
     deskPanel(parent,createPost){
