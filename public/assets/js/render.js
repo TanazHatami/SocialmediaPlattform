@@ -1,5 +1,5 @@
 'use strict';
-import settings, { elementsIndex, elementsRegister, elementsDesk,user } from './settings.js';
+import settings, { elementsIndex, elementsRegister, elementsDesk, user } from './settings.js';
 import component, { error } from './component.js';
 import { create, $, $$ } from './dom.js';
 const render = {
@@ -95,7 +95,7 @@ const render = {
             parent: row,
             classes: ['col-12']
         });
-      
+
         create({
             parent: colLink,
             type: 'a',
@@ -123,7 +123,7 @@ const render = {
                 type: 'h2',
                 parent: colUser,
                 content: post.username,
-                classes: ['username', post.userId==user.id ? 'myPost' : 'notMyPost']
+                classes: ['username', post.userId == user.id ? 'myPost' : 'notMyPost']
             });
             //nur wenn ein img speichert wurde
             if (post.hasOwnProperty('illu')) {
@@ -175,26 +175,26 @@ const render = {
 
         })
     },
-    showAllUsers(users){
-        elementsDesk.members.innerHTML='';
+    showAllUsers(users) {
+        elementsDesk.members.innerHTML = '';
         create({
-            type:'h3',
-            parent:elementsDesk.members,
-            content:`${users.length} Members`
+            type: 'h3',
+            parent: elementsDesk.members,
+            content: `${users.length} Members`
         });
-        users.map(user=>{
-            const row=create({
-                parent:elementsDesk.members,
-                classes:['row m-0 px-3']
+        users.map(user => {
+            const row = create({
+                parent: elementsDesk.members,
+                classes: ['row m-0 px-3']
             });
-            const col=create({
-                parent:row,
-                classes:['col']
+            const col = create({
+                parent: row,
+                classes: ['col']
             });
             create({
-                type:'p',
-                parent:col,
-                content:user
+                type: 'p',
+                parent: col,
+                content: user
             });
         })
     }
